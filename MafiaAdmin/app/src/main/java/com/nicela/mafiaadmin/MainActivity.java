@@ -5,15 +5,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.nicela.mafiaadmin.Fragments.CardsFragment.CardsFragment;
 
 public class MainActivity extends ActionBarActivity
 {
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, new MainActivityFragment())
+                .commit();
+
     }
 
 
@@ -36,6 +41,9 @@ public class MainActivity extends ActionBarActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings)
         {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new CardsFragment())
+                    .commit();
             return true;
         }
 

@@ -4,10 +4,26 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TableLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/tableLayout">
-    </TableLayout>
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:singleLine="true"
+        android:scrollHorizontally="true"
+        android:id="@+id/cardFragment_textView_status"/>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView2">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/tableLayout_cards">
+        </TableLayout>
+    </ScrollView>
+
 </LinearLayout>

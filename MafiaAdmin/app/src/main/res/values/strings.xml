@@ -4,4 +4,11 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="hello_world">Hello world!</string>
+
+    //Cards fragment
+    <string name="choose">Choose</string>
+    <string name="player">Player</string>
+    <string name="times_to_pick">times to pick!</string>
+    <string name="choose_the_card">Please, choose the card!</string>
+    <string name="time_to_choose">is time to choose!</string>
 </resources>

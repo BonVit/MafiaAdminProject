@@ -28,6 +28,7 @@ public class MafiaGameMode
         this.mRoles = mRoles;
     }
 
+    //Classic game mode
     public MafiaGameMode(int mode)
     {
         switch (mode)
@@ -35,10 +36,22 @@ public class MafiaGameMode
             case MafiaUtills.CLASSIC_MODE:
                 mRoles = new int[]
                         {MafiaUtills.CIVILIAN, MafiaUtills.CIVILIAN, MafiaUtills.CIVILIAN, MafiaUtills.CIVILIAN,
-                                MafiaUtills.CIVILIAN, MafiaUtills.CIVILIAN, MafiaUtills.SHERIFF, MafiaUtills.MAFIA,
+                                MafiaUtills.CIVILIAN, MafiaUtills.CIVILIAN, MafiaUtills.COMMISSAR, MafiaUtills.MAFIA,
                                 MafiaUtills.MAFIA, MafiaUtills.MAFIA_BOSS};
                 break;
         }
         mPlayersNumber = mRoles.length;
+    }
+
+    public void shuffleRoles()
+    {
+
+        for(int i = 0; i < mPlayersNumber; i++)
+        {
+            int rand = (int) (Math.random() * mPlayersNumber);
+            int tmp = mRoles[i];
+            mRoles[i] = mRoles[rand];
+            mRoles[rand] = tmp;
+        }
     }
 }
