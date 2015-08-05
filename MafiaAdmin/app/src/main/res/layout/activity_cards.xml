@@ -8,7 +8,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
         android:singleLine="true"
         android:scrollHorizontally="true"
         android:id="@+id/cardFragment_textView_status"/>
@@ -16,7 +15,8 @@
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollView2">
+        android:id="@+id/scrollView2"
+        android:fillViewport="false">
 
         <TableLayout
             android:layout_width="match_parent"

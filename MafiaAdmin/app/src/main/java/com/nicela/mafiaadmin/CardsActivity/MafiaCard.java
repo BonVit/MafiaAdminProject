@@ -1,4 +1,4 @@
-package com.nicela.mafiaadmin.Fragments.CardsFragment;
+package com.nicela.mafiaadmin.CardsActivity;
 
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -12,7 +12,7 @@ import com.nicela.mafiaadmin.R;
 /**
  * Created by Vitaliy on 7/20/2015.
  */
-public class MafiaCard
+class MafiaCard
 {
     final static int CARD_TRANSPARENT = 180;
 
@@ -20,7 +20,7 @@ public class MafiaCard
     private ImageView mImage;
     private boolean mIsClicked = false;
     private boolean mIsChosen = false;
-    private CardsFragment mCardsFragment;
+    private CardsActivity mCardsActivity;
 
     public boolean isClicked()
     {
@@ -47,11 +47,11 @@ public class MafiaCard
         return mRole;
     }
 
-    public MafiaCard(final int mRole, final ImageView mImage, CardsFragment mCardsFragment)
+    public MafiaCard(final int mRole, final ImageView mImage, CardsActivity mCardsActivity)
     {
         this.mRole = mRole;
         this.mImage = mImage;
-        this.mCardsFragment = mCardsFragment;
+        this.mCardsActivity = mCardsActivity;
         DOUBLE_TOUCH_DETECTOR.setOnDoubleTapListener(cardOnDoubleTouch);
 
         mImage.setOnClickListener(cardOnTouch);
@@ -74,11 +74,13 @@ public class MafiaCard
         @Override
         public void onClick(View v)
         {
-            if(mCardsFragment.isDoubleTaped())
+            if(mCardsActivity.isDoubleTaped())
             {
-                mCardsFragment.getCurrentImage().setImageResource(R.drawable.card_shirt);
-                mCardsFragment.setIsDoubleTaped(false);
-                mCardsFragment.getCurrentImage().setImageAlpha(CARD_TRANSPARENT);
+                mCardsActivity.getCurrentImage().setImageResource(R.drawable.card_shirt);
+                mCardsActivity.setIsDoubleTaped(false);
+                mCardsActivity.getCurrentImage().setImageAlpha(CARD_TRANSPARENT);
+                mCardsActivity.getTextViewStatus().setText(mCardsActivity.getResources().getString(R.string.player)
+                        + " " + (mCardsActivity.mNumberClicks + 1) + " " + mCardsActivity.getResources().getString(R.string.time_to_choose));
                 clearCardsBackground();
             }
             else
@@ -111,10 +113,10 @@ public class MafiaCard
     private void clearCardsBackground()
     {
 
-        for(int i = 0; i < mCardsFragment.getCards().size(); i++)
+        for(int i = 0; i < mCardsActivity.getCards().size(); i++)
         {
-            mCardsFragment.getCards().elementAt(i).mImage.setBackgroundResource(R.drawable.card_clear_background);
-            mCardsFragment.getCards().elementAt(i).mIsChosen = false;
+            mCardsActivity.getCards().elementAt(i).mImage.setBackgroundResource(R.drawable.card_clear_background);
+            mCardsActivity.getCards().elementAt(i).mIsChosen = false;
         }
     }
 
@@ -138,9 +140,10 @@ public class MafiaCard
                     mImage.setImageResource(R.drawable.card_mafia_boss);
                     break;
             }
-            mCardsFragment.setCurrentImage(mImage);
-            mCardsFragment.setIsDoubleTaped(true);
-            mCardsFragment.getMafiaGame().addPlayer(new MafiaPlayer(mRole));
+            mCardsActivity.setCurrentImage(mImage);
+            mCardsActivity.setIsDoubleTaped(true);
+            mCardsActivity.getMafiaGame().addPlayer(new MafiaPlayer(mRole));
+            mCardsActivity.mNumberClicks++;
             mIsClicked = true;
             return true;
         }

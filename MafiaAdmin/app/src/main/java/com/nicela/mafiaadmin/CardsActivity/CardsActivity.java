@@ -1,11 +1,8 @@
-package com.nicela.mafiaadmin.Fragments.CardsFragment;
+package com.nicela.mafiaadmin.CardsActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -14,7 +11,6 @@ import android.widget.TextView;
 import com.nicela.mafiaadmin.ConfigurationUtills;
 import com.nicela.mafiaadmin.MafiaGameSource.MafiaGame;
 import com.nicela.mafiaadmin.MafiaGameSource.MafiaGameMode;
-import com.nicela.mafiaadmin.MafiaGameSource.MafiaPlayer;
 import com.nicela.mafiaadmin.MafiaGameSource.MafiaUtills;
 import com.nicela.mafiaadmin.R;
 
@@ -23,10 +19,8 @@ import java.util.Vector;
 /**
  * Created by Vitaliy on 7/20/2015.
  */
-public class CardsFragment extends Fragment
+public class CardsActivity extends Activity
 {
-    private View mView;
-
     private TableLayout mTableLayout;
     private TextView mTextViewStatus;
 
@@ -35,17 +29,12 @@ public class CardsFragment extends Fragment
     private MafiaGame mMafiaGame;
 
     private boolean isDoubleTaped = false;
+    int mNumberClicks = 0;
 
-    private int mNumberChosenCard = 0;
-
-    public int getNumberChosenCard()
+    //Getters and setters
+    TextView getTextViewStatus()
     {
-        return mNumberChosenCard;
-    }
-
-    public void setNumberChosenCard(int mNumberChosenCard)
-    {
-        this.mNumberChosenCard = mNumberChosenCard;
+        return mTextViewStatus;
     }
 
     public ImageView getCurrentImage()
@@ -65,8 +54,15 @@ public class CardsFragment extends Fragment
         return mMafiaGame;
     }
 
-    public CardsFragment()
+    public CardsActivity()
     {
+        mMafiaCards = new Vector<MafiaCard>();
+        mMafiaGame = new MafiaGame(mMafiaGameMode);
+    }
+
+    public CardsActivity(MafiaGameMode mMafiaGameMode)
+    {
+        this.mMafiaGameMode = mMafiaGameMode;
         mMafiaCards = new Vector<MafiaCard>();
         mMafiaGame = new MafiaGame(mMafiaGameMode);
     }
@@ -86,21 +82,21 @@ public class CardsFragment extends Fragment
         return mMafiaCards;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
-        mView = inflater.inflate(R.layout.fragment_cards, container, false);
-        mTableLayout = (TableLayout) mView.findViewById(R.id.tableLayout_cards);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cards);
+        mTableLayout = (TableLayout) findViewById(R.id.tableLayout_cards);
         mTableLayout.setOnClickListener(onClick);
-        mTextViewStatus = (TextView) mView.findViewById(R.id.cardFragment_textView_status);
+        mTextViewStatus = (TextView) findViewById(R.id.cardFragment_textView_status);
         mTextViewStatus.setOnClickListener(onClick);
+        mTextViewStatus.setText(getResources().getString(R.string.player) + " " + (mNumberClicks + 1) + " " +
+                getResources().getString(R.string.time_to_choose));
 
         mMafiaGameMode = new MafiaGameMode(MafiaUtills.CLASSIC_MODE);
         mMafiaGameMode.shuffleRoles();
         showCards();
-
-        return mView;
     }
 
     private void showCards()
